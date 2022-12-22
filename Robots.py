@@ -125,9 +125,11 @@ class CoffeeRobot(Robot):
         self.ready_tasks = self.coffee_machine.ready_tasks_queue
         self.order_mask = 0
         self.pickup_mask = 0
+        num_order=0
         for bit, task in enumerate(self.ready_tasks):
             if task.type == TaskTypes.order:
                 self.order_mask = self.bit_set(self.order_mask, bit)
+                num_order+=1
             elif task.type == TaskTypes.pickup:
                 self.pickup_mask = self.bit_set(self.pickup_mask, bit)
         self.num_tasks = len(self.ready_tasks)
@@ -139,9 +141,9 @@ class CoffeeRobot(Robot):
         d5 = 2
         self.dp = np.array([-1]*(d1*d2*d3*d4*d5)).reshape(d1, d2, d3, d4, d5)
         ans = self.check(
-            len(self.desks)-1, min(self.num_tasks, self.capacity), 0, tasks_mask)
+            len(self.desks)-1, min(num_order, self.capacity), 0, tasks_mask)
         self.chosen_tasks = []
-        self.backtrack(len(self.desks)-1, min(self.num_tasks, self.capacity),
+        self.backtrack(len(self.desks)-1, min(num_order, self.capacity),
                        0, tasks_mask, ans)
         self.coffee_machine.finish_tasks(self.chosen_tasks)
         for task in self.chosen_tasks:
