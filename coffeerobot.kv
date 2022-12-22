@@ -1,0 +1,40 @@
+<ColorLabel>:
+	orientation:'vertical'
+	Label:
+		text:root.text
+		size_hint:root.size_hint
+		color:root.color
+		canvas.before:
+			Color:
+				rgba:root.background_color
+			Rectangle:
+				size:self.size
+				pos:self.pos
+<SquareCell>:
+	orientation:'vertical'
+	Label:
+		text: str(root.dist) if root.dist!=-1 else ''
+		font_size:8
+		color:(0,0,0,1)
+		canvas.before:
+			Color:
+				rgba:root.color
+			Rectangle:
+				size:self.size
+				pos:self.pos
+<SquareGrid>:
+	rows:self.grid_size
+	cols:self.grid_size
+	spacing:[2,2]
+<GameScreen>:
+	canvas.before:
+		Rectangle:
+			pos:self.pos
+			size:self.size
+			source:'graphics/map2.png'
+<EditScreen>:
+	canvas.before:
+		Rectangle:
+			pos:self.pos
+			size:self.size
+			source:'graphics/map2.png'
